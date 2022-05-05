@@ -8,6 +8,9 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
+import HomeScreen from "../screens/HomeScreen";
+import RecipeScreen from "../screens/RecipeScreen";
+import RecipeDetailScreen from "../screens/RecipeDetailScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 
@@ -29,7 +32,9 @@ const Stack = createStackNavigator();
 function RootNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Root" component={BottomTabNavigator} />
+      <Stack.Screen name="Root" component={HomeScreen} />
+      <Stack.Screen name="Recipe" component={RecipeScreen} />
+      <Stack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
