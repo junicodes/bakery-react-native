@@ -35,7 +35,7 @@ const Stack = createStackNavigator();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Preferences" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Root" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={HomeScreen} />
       <Stack.Screen name="Recipe" component={RecipeScreen} />
       <Stack.Screen name="Favourite" component={FavouriteScreen} />
