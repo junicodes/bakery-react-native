@@ -77,7 +77,7 @@ export default function WeightScreen({ navigation }) {
                <TextInput
                     style={formViewStyles.input}
                     numberOfLines={1}
-                    value={values.gram > 0 && values.gram.toString()}
+                    value={values.gram > 0 ? values.gram.toString() : ''}
                     keyboardType="numeric"
                     placeholder="0.00 g"
                     onChangeText={(value) => handleChange(value, "gram")}
@@ -89,7 +89,7 @@ export default function WeightScreen({ navigation }) {
                <TextInput
                     style={formViewStyles.input}
                     numberOfLines={1}
-                    value={values.oz > 0 && values.oz.toString()}
+                    value={values.oz > 0 ? values.oz.toString() : ''}
                     keyboardType="numeric"
                     placeholder="0.00 oz"
                     onChangeText={(value) => handleChange(value, "oz")}
@@ -101,7 +101,7 @@ export default function WeightScreen({ navigation }) {
                <TextInput
                     style={formViewStyles.input}
                     numberOfLines={1}
-                    value={values.ibs > 0 && values.ibs.toString()}
+                    value={values.ibs > 0 ? values.ibs.toString() : ''}
                     keyboardType="numeric"
                     placeholder="0.00 ibs"
                     onChangeText={(value) => handleChange(value, "ibs")}

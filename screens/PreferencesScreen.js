@@ -10,6 +10,9 @@ const fontFamily = [
   'Serif',
   'Monospace'
 ]
+const fontSize = [
+  10,11,12,13,14,15,16,17,18,19,20
+]
 export default function WeightScreen({ navigation }) {
   const [downDropIcon] = useState("angle-down");
   const [checked, setChecked] = useState(false);
@@ -66,7 +69,7 @@ export default function WeightScreen({ navigation }) {
               </Text>
               <View  style={{position: 'relative'}}>
                 <SelectDropdown
-                  data={fontFamily}
+                  data={fontSize}
                   ref={selDropDownRef}
                   onSelect={selectedItem => {  
                     //set type for tag selection
