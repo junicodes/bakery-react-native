@@ -11,15 +11,6 @@ export default function HomeScreen({ navigation }) {
   return (
     <ScrollLayout>
         <View style={generalStyles.container}>
-          <View style={styles.logoContainer}>
-              <View style={styles.imageBox}>
-                  <Image
-                      source={offlineImage.appLogo}
-                      style={styles.image}
-                      PlaceholderContent={<ActivityIndicator />}
-                  />
-              </View>
-          </View>
           <View style={styles.menuTab}>
             <View style={styles.block}>
               <TouchableOpacity onPress={() => navigation.navigate("Recipe")} style={[styles.menuImgBox]}>
@@ -29,7 +20,7 @@ export default function HomeScreen({ navigation }) {
                     PlaceholderContent={<ActivityIndicator />}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log("ready for action")} style={[styles.menuImgBox]}>
+              <TouchableOpacity onPress={() => navigation.navigate("Favourite")} style={[styles.menuImgBox]}>
                 <Image
                     source={offlineImage.favouriteMenu}
                     style={[styles.menuImage]}
@@ -38,30 +29,23 @@ export default function HomeScreen({ navigation }) {
               </TouchableOpacity>
             </View>
             <View style={styles.block}>
-              <TouchableOpacity onPress={() => console.log("ready for action")} style={[styles.menuImgBox]}>
-                <Image
-                    source={offlineImage.updateMenu}
-                    style={[styles.menuImage]}
-                    PlaceholderContent={<ActivityIndicator />}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log("ready for action")} style={[styles.menuImgBox]}>
+              <TouchableOpacity onPress={() => navigation.navigate("AddNew")} style={[styles.menuImgBox]}>
                 <Image
                     source={offlineImage.addMenu}
                     style={[styles.menuImage]}
                     PlaceholderContent={<ActivityIndicator />}
                 />
               </TouchableOpacity>
-            </View>
-            <View style={styles.block}>
-              <TouchableOpacity onPress={() => console.log("ready for action")} style={[styles.menuImgBox]}>
+              <TouchableOpacity onPress={() => navigation.navigate("Weight")} style={[styles.menuImgBox]}>
                 <Image
                     source={offlineImage.weightMenu}
                     style={[styles.menuImage]}
                     PlaceholderContent={<ActivityIndicator />}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log("ready for action")} style={[styles.menuImgBox]}>
+            </View>
+            <View style={styles.block}>
+              <TouchableOpacity onPress={() => navigation.navigate("Preferences")} style={[styles.menuImgBox]}>
                 <Image
                     source={offlineImage.preferenceMenu}
                     style={[styles.menuImage]}
@@ -70,26 +54,12 @@ export default function HomeScreen({ navigation }) {
               </TouchableOpacity>
             </View>
         </View>
-      </View>
+        </View>
     </ScrollLayout>
   );
 }
 
 const styles = StyleSheet.create({
-  logoContainer: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center'
-  },
-  image:{   
-    width: '100%',
-    height: '100%',
-  },
-  imageBox: {
-    width: 150,
-    height: 35
-  },
   list: {
     width: '100%',
     backgroundColor: '#000',
@@ -101,10 +71,9 @@ const styles = StyleSheet.create({
   },
    menuTab: {
     flex: 1,
-    paddingTop: 50,
    },
   block: {
-    paddingVertical: 20,
+    paddingVertical: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -112,7 +81,8 @@ const styles = StyleSheet.create({
   menuImgBox: {
     borderRadius: 8,
     width: '50%',
-    height: 150
+    height: 170,
+    marginBottom: 10
   },
   menuImage:{   
     width: '100%',

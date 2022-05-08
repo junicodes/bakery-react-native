@@ -10,8 +10,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import HomeScreen from "../screens/HomeScreen";
 import RecipeScreen from "../screens/RecipeScreen";
+import FavouriteScreen from "../screens/FavouriteScreen";
 import RecipeDetailScreen from "../screens/RecipeDetailScreen";
-import BottomTabNavigator from "./BottomTabNavigator";
+import AddNewScreen from "../screens/AddNewScreen";
+import EditScreen from "../screens/EditScreen";
+import WeightScreen from "../screens/WeightScreen";
+import PreferencesScreen from "../screens/PreferencesScreen";
 import LinkingConfiguration from "./LinkingConfiguration";
 
 export default function Navigation({ colorScheme }) {
@@ -31,10 +35,15 @@ const Stack = createStackNavigator();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Preferences" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Root" component={HomeScreen} />
       <Stack.Screen name="Recipe" component={RecipeScreen} />
+      <Stack.Screen name="Favourite" component={FavouriteScreen} />
       <Stack.Screen name="RecipeDetail" component={RecipeDetailScreen} />
+      <Stack.Screen name="AddNew" component={AddNewScreen} />
+      <Stack.Screen name="Edit" component={EditScreen} />
+      <Stack.Screen name="Weight" component={WeightScreen} />
+      <Stack.Screen name="Preferences" component={PreferencesScreen} />
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
