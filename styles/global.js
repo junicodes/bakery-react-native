@@ -54,6 +54,15 @@ export const generalStyles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20
   },
+  notFoundText: {
+    textAlign: 'center', 
+    marginTop: 20, 
+    fontSize: 16,
+    color: 'gray'
+  },
+  spinnerTextStyle: {
+    color: '#FFF',
+  }
 });
 
 export const imageStyle = StyleSheet.create({
@@ -97,7 +106,7 @@ export const formViewStyles = StyleSheet.create({
       color: "red",
   },
   input: {
-    marginVertical: 10,
+    marginVertical: 5,
     width: "100%",
     height: 50,
     borderWidth: 1,
@@ -138,5 +147,5 @@ export const formViewStyles = StyleSheet.create({
       textAlign: 'left',
       color: '#757575',
       fontSize: 14,
-  },
+  }
 });

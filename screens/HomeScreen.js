@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   menuImgBox: {
     borderRadius: 8,
     width: '50%',
-    height: 170,
+    height: 180,
     marginBottom: 10
   },
   menuImage:{   

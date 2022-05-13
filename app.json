@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "topnotchbakery",
-    "slug": "expo-template-tabs",
+    "slug": "topnotchbakery",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "usesIcloudStorage": true
@@ -24,7 +26,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.junicancode.topnotchbakery"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"

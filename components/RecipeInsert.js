@@ -18,7 +18,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const validationSchema = Yup.object().shape({
     title: Yup.string()
@@ -42,10 +42,18 @@ const ErrorMessage = ({ errorValue }) => (
 
 export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
 
-    const [image, setImage] = useState(recipe ? recipe.image : null);
-    let formPayload = { title: "", description: "" };
+    const [image, setImage] = useState(null);
+    const [formPayload, setFormPayload ] = useState({ title: "", description: "" });
 
-    if(recipe) { formPayload = recipe; }
+    useEffect(() => {
+        if(recipe) {
+            setImage(recipe.image)
+            setFormPayload({
+                title: recipe.title,
+                description: recipe.description
+            })
+        }
+    }, [recipe])
 
     const pickImage = async () => {
         // No permissions request is necessary for launching the image library
@@ -59,12 +67,13 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
         if (!result.cancelled) { setImage(result.uri) }
     };
 
-   const onLoginHandler = (values, actions) => {
-        const {title, description} = values;
+    const handleSubmitFunc = (values) => {    
+        //validate image and other data here 
+        //validate the category and image
+        if(!image) return alert("Please add a recipe image to continue");
 
-        console.log(title, description)
+        return onAddRecipeHandler(values, image)
     }
-    
 
   return (
     <>
@@ -96,9 +105,9 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
             }
             {
                 image && (
-                    <TouchableOpacity onPress={() => setImage(null)} style={{position: 'absolute', right: 20, top: 20}}>
+                    <TouchableOpacity onPress={() => setImage(null)} style={{position: 'absolute', right: 10, top: 20}}>
                         <Icon
-                            name="remove"
+                            name="trash"
                             type="font-awesome"
                             color="red"
                             size={20}
@@ -111,7 +120,7 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
             <Formik
                 enableReinitialize
                 initialValues={formPayload}
-                onSubmit={(values, actions) => onAddRecipeHandler(values, actions)}
+                onSubmit={(values, actions) => handleSubmitFunc(values, actions)}
                 validationSchema={validationSchema}
             >
                 {({
@@ -123,7 +132,6 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
                 handleBlur,
                 }) => (
                 <View style={formViewStyles.container}>
-
                     <TextInput
                         style={formViewStyles.input}
                         numberOfLines={1}
@@ -135,6 +143,7 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
                     <ErrorMessage errorValue={touched.title && errors.title} />
                     <TextInput
                         multiline
+                        numberOfLines={1}
                         style={[formViewStyles.input, formViewStyles.textArea]}
                         maxLength={400}
                         value={values.description}
@@ -143,11 +152,15 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
                         onBlur={handleBlur("description")}
                     />
                     <ErrorMessage errorValue={touched.description && errors.description} />
-                    <TouchableOpacity
-                        onPress={handleSubmit}
-                        style={formViewStyles.buttonContainer}
-                    >
-                        <Text style={formViewStyles.buttonText}>Save</Text>
+                    <TouchableOpacity onPress={handleSubmit}>
+                        <LinearGradient
+                            colors={["#FFD15C", "gray"]}
+                            start={{  x: 1, y: 0 }}
+                            end={{  x: 0.2, y: 0 }}
+                            style={formViewStyles.buttonContainer}
+                        >
+                            <Text style={formViewStyles.buttonText}>Save</Text>
+                        </LinearGradient>
                     </TouchableOpacity>
                 </View>
                 )}
@@ -173,7 +186,6 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         height: 320,
         borderRadius: 8,
-        marginBottom: 10
     },
     image: {
         width: "100%",
