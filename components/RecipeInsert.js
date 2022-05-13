@@ -8,17 +8,14 @@ import {
     StyleSheet,
     Dimensions,
 } from "react-native";
-import { Button, CheckBox } from "react-native-elements";
-import { offlineImage, onlineImage } from '../utils/images';
 import { Image, Icon } from '@rneui/themed';
-import { ScrollView } from "react-native-gesture-handler";
-import ScrollLayout from "../components/ScrollLayout";
 import { generalStyles, formViewStyles } from "../styles/global";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import * as DocumentPicker from 'expo-document-picker';
+// import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useAppContext } from "../context_api/AppContext";
 
 const validationSchema = Yup.object().shape({
     title: Yup.string()
@@ -29,8 +26,6 @@ const validationSchema = Yup.object().shape({
       .required("Please enter a short description about recipe")
       .min(6, "Decription text is too short, should be greater than 6 character's"),
 });
-
-
 
 const ErrorMessage = ({ errorValue }) => (
     <View style={styles.errorContainer}>
@@ -44,6 +39,10 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
 
     const [image, setImage] = useState(null);
     const [formPayload, setFormPayload ] = useState({ title: "", description: "" });
+
+    //Use Context
+    const appContext = useAppContext();
+    const { themeMode } = appContext;
 
     useEffect(() => {
         if(recipe) {
@@ -133,10 +132,11 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
                 }) => (
                 <View style={formViewStyles.container}>
                     <TextInput
-                        style={formViewStyles.input}
+                        style={[formViewStyles.input, {color: themeMode === 'dark' ? '#fff' : '#000'}]}
                         numberOfLines={1}
                         value={values.title}
                         placeholder="Enter Recipe Title"
+                        placeholderTextColor="#e6e6e6"
                         onChangeText={handleChange("title")}
                         onBlur={handleBlur("title")}
                     />
@@ -144,10 +144,11 @@ export default function RecipeInsert({recipe = null, onAddRecipeHandler}) {
                     <TextInput
                         multiline
                         numberOfLines={1}
-                        style={[formViewStyles.input, formViewStyles.textArea]}
+                        style={[formViewStyles.input, formViewStyles.textArea, {color: themeMode === 'dark' ? '#fff' : '#000'}]}
                         maxLength={400}
                         value={values.description}
                         placeholder="Write a description and ingredients about recipe"
+                        placeholderTextColor="#e6e6e6"
                         onChangeText={handleChange("description")}
                         onBlur={handleBlur("description")}
                     />

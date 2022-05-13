@@ -1,25 +1,37 @@
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   ActivityIndicator,
-  FlatList,
-  SafeAreaView,
 } from "react-native";
-import { Button, CheckBox } from "react-native-elements";
-import { offlineImage, onlineImage } from "../utils/images";
+import React, {useEffect, useState} from "react";
 import { Image } from "@rneui/themed";
-import { ScrollView } from "react-native-gesture-handler";
-import { ListItem, Avatar, Icon } from "@rneui/themed";
-import TouchableScale from "react-native-touchable-scale"; // https://github.com/kohver/react-native-touchable-scale
 import { LinearGradient } from "expo-linear-gradient"; // Only if no expo
 import ScrollLayout from "../components/ScrollLayout";
 import { generalStyles } from "../styles/global";
+import { useAppContext } from "../context_api/AppContext";
 
-const image = "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg";
 
-export default function RecipeDetailScreen({ navigation }) {
+export default function RecipeDetailScreen({ navigation, route }) {
+  const [image, setImage] = useState(null);
+  const [recipe, setRecipe] = useState({ title: "", description: "" });
+  //Use Context
+  const appContext = useAppContext();
+  const { themeMode } = appContext;
+  const themeStyle = themeMode === 'dark' ? '#fff' : '#000'
+
+  useEffect(() => {
+    //load new payload if new item is added
+    if(route?.params?.recipe){
+      const {recipe} = route.params;
+      setImage(recipe.image)
+      setRecipe({
+          title: recipe.title,
+          description: recipe.description
+      })
+    };
+  }, [route])
+
   return (
     <ScrollLayout withBackButton>
       <View style={generalStyles.container}>
@@ -35,15 +47,12 @@ export default function RecipeDetailScreen({ navigation }) {
           </View>
           <View style={generalStyles.twoSpaceTop}>
             <Text style={styles.headerTitle}>Recipe Name</Text>
-            <Text>Bazy Food Sweet</Text>
+            <Text style={{color: themeStyle}}>{recipe.title}</Text>
           </View>
           <View style={generalStyles.twoSpaceTop}>
             <Text style={styles.headerTitle}>Recipe Details and Ingredients</Text>
-            <Text style={styles.description}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of t
-              ype and scrambled it to make a type specimen book
+            <Text style={[{color: themeStyle}, styles.description]}>
+              {recipe.description}
             </Text>
           </View>
         </View>

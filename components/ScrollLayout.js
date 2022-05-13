@@ -6,14 +6,19 @@ import { generalStyles, imageStyle } from "../styles/global";
 import { offlineImage, onlineImage } from '../utils/images';
 import { Image, Icon } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+import { useAppContext } from "../context_api/AppContext";
+
 
 const ScrollLayout = ({ children, title = '', withBackButton = false}) => {
 
   const navigation = useNavigation();
+  //Use Context
+  const appContext = useAppContext();
+  const { themeMode } = appContext;
 
   return (
     <>
-      <ScrollView contentContainerStyle={{flex: 1, backgroundColor: '#fff'}}>
+      <ScrollView contentContainerStyle={{flex: 1, backgroundColor: themeMode === 'dark' ? '#000' : '#fff'}}>
           {
             !withBackButton && (
               <View style={imageStyle.logoContainer}>
@@ -53,17 +58,17 @@ const ScrollLayout = ({ children, title = '', withBackButton = false}) => {
               </View>
             )
           }
-          <Text style={generalStyles.screenText}>{title}</Text>
+          <Text style={[{color: (themeMode === 'dark') ? '#fff' : '#000'}, generalStyles.screenText]}>{title}</Text>
           <ScrollView>
             {children}
           </ScrollView>
-          <View style={generalStyles.layoutbelowBox}>
+          {/* <View style={generalStyles.layoutbelowBox}>
             <Image
                 source={offlineImage.layoutBelow}
                 style={generalStyles.image}
                 PlaceholderContent={<ActivityIndicator />}
             />
-          </View>
+          </View> */}
       </ScrollView>
     </>
   )

@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import { View, TextInput, Text } from "react-native";
 import ScrollLayout from "../components/ScrollLayout";
 import { generalStyles, formViewStyles } from "../styles/global";
-
+import { useAppContext } from "../context_api/AppContext";
 
 export default function WeightScreen({ navigation }) {
 
- const data = {
-    gram: 0,
-    oz: 0,
-    ibs: 0
-}
+  //Use Context
+  const appContext = useAppContext();
+  const { themeMode } = appContext;
+  const themeStyle = themeMode === 'dark' ? '#fff' : '#000'
+
+  const data = {
+      gram: 0,
+      oz: 0,
+      ibs: 0
+  }
 
   const [values, setValues] = useState(data);
 
@@ -73,37 +78,40 @@ export default function WeightScreen({ navigation }) {
     <ScrollLayout title="Weight Converter" withBackButton>
         <View style={[generalStyles.container]}>
            <View style={formViewStyles.block}>
-               <Text style={formViewStyles.title}>Grams (g)</Text>
+               <Text style={[{color: themeStyle}, formViewStyles.title]}>Grams (g)</Text>
                <TextInput
-                    style={formViewStyles.input}
+                    style={[formViewStyles.input, {color: themeStyle}]}
                     numberOfLines={1}
                     value={values.gram > 0 ? values.gram.toString() : ''}
-                    keyboardType="numeric"
+                    keyboardType={"number-pad"}
                     placeholder="0.00 g"
+                    placeholderTextColor="#e6e6e6"
                     onChangeText={(value) => handleChange(value, "gram")}
                     onPressIn={() => setValues(data)}
                 />
            </View>
            <View style={formViewStyles.block}>
-               <Text style={formViewStyles.title}>Ounces (oz)</Text>
+               <Text style={[ {color: themeStyle}, formViewStyles.title]}>Ounces (oz)</Text>
                <TextInput
-                    style={formViewStyles.input}
+                    style={[formViewStyles.input, {color: themeStyle}]}
                     numberOfLines={1}
                     value={values.oz > 0 ? values.oz.toString() : ''}
-                    keyboardType="numeric"
+                    keyboardType={"number-pad"}
                     placeholder="0.00 oz"
+                    placeholderTextColor="#e6e6e6"
                     onChangeText={(value) => handleChange(value, "oz")}
                     onPressIn={() => setValues(data)}
                 />
            </View>
            <View style={formViewStyles.block}>
-               <Text style={formViewStyles.title}>Pounds (ibs)</Text>
+               <Text style={[ {color: themeStyle}, formViewStyles.title]}>Pounds (ibs)</Text>
                <TextInput
-                    style={formViewStyles.input}
+                    style={[formViewStyles.input, {color: themeStyle}]}
                     numberOfLines={1}
                     value={values.ibs > 0 ? values.ibs.toString() : ''}
                     keyboardType="numeric"
                     placeholder="0.00 ibs"
+                    placeholderTextColor="#e6e6e6"
                     onChangeText={(value) => handleChange(value, "ibs")}
                     onPressIn={() => setValues(data)}
                 />

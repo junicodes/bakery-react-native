@@ -1,3 +1,4 @@
+import React, {useLayoutEffect} from "react";
 import { StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, FlatList, SafeAreaView } from "react-native";
 import { Button, CheckBox } from "react-native-elements";
 import { offlineImage, onlineImage } from '../utils/images';
@@ -5,9 +6,23 @@ import { Image } from '@rneui/themed';
 import { ScrollView } from "react-native-gesture-handler";
 import ScrollLayout from "../components/ScrollLayout";
 import { generalStyles } from "../styles/global";
+import { getData, storeData } from "../utils/dataService";
 
+//constant variable
+const tableName = '@themeMode';
 
 export default function HomeScreen({ navigation }) {
+
+  useLayoutEffect(() => {
+    
+    const storeDarkMode = async () => {
+      const checkTheme = await getData(tableName)
+      if(!checkTheme) return await storeData('light', tableName);
+    }
+    storeDarkMode();
+
+  }, [])
+
   return (
     <ScrollLayout>
         <View style={generalStyles.container}>

@@ -7,6 +7,7 @@ import { useLoadedAssets } from "./hooks/useLoadedAssets";
 import Navigation from "./navigation";
 import { useColorScheme } from "react-native";
 import Toast from 'react-native-toast-message';
+import CombineContextProvider from "./context_api";
 
 export default function App() {
   const isLoadingComplete = useLoadedAssets();
@@ -16,11 +17,13 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-        <Toast />
-      </SafeAreaProvider>
+      <CombineContextProvider>
+        <SafeAreaProvider>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+          <Toast />
+        </SafeAreaProvider>
+      </CombineContextProvider>
     );
   }
 }

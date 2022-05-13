@@ -1,9 +1,12 @@
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import ScrollLayout from "../components/ScrollLayout";
 import { generalStyles, formViewStyles } from "../styles/global";
 import { Switch, Icon } from '@rneui/themed';
 import SelectDropdown from 'react-native-select-dropdown';
+import { useColorScheme } from "react-native";
+import { getData, storeData } from "../utils/dataService";
+import { useAppContext, useDispatchAppContext } from "../context_api/AppContext";
 
 const fontFamily = [
   'Poppins',
@@ -13,13 +16,19 @@ const fontFamily = [
 const fontSize = [
   10,11,12,13,14,15,16,17,18,19,20
 ]
+
+//constant variable
+const tableName = '@themeMode';
+
 export default function WeightScreen({ navigation }) {
-  const [downDropIcon] = useState("angle-down");
-  const [checked, setChecked] = useState(false);
   const [fontFamilyDefault, setFontFamilyDefault] = useState('Poppins')
   const [fontSizeDefault, setFontSizeDefault] = useState('14')
 
-  console.log(checked)
+  //Use Context
+  const appContext = useAppContext();
+  const dispatchAppContext = useDispatchAppContext();
+  const { themeMode } = appContext;
+
   //Ref
   const selDropDownRef = useRef({});
 
@@ -27,17 +36,22 @@ export default function WeightScreen({ navigation }) {
     <ScrollLayout title="Preferences" withBackButton>
         <View style={[generalStyles.container, {marginTop: 50}]}>
             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 2, borderColor: '#e6e6e6', paddingVertical: 15}}>
-              <Text style={formViewStyles.title}>
+              <Text style={[ {color: (themeMode === 'dark') ? '#fff' : '#000'}, formViewStyles.title]}>
                 Dark Mode
               </Text>
               <Switch
-                value={checked}
+                value={themeMode === 'dark' ? true : false }
                 color="#F8B64C"
-                onValueChange={(value) => setChecked(value)}
+                onValueChange={(value) => {
+                  dispatchAppContext({
+                    type: 'THEME_MODE',
+                    payload: value ? 'dark' : 'light'
+                  })
+                }}
               />
             </View>
             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 2, borderColor: '#e6e6e6', paddingVertical: 15,position: 'relative'}}>
-              <Text style={formViewStyles.title}>
+              <Text style={[{color: (themeMode === 'dark') ? '#fff' : '#000'}, formViewStyles.title]}>
                 Change Font Faces
               </Text>
               <View  style={{position: 'relative'}}>
@@ -64,7 +78,7 @@ export default function WeightScreen({ navigation }) {
               </View>
             </View>
             <View style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', borderBottomWidth: 2, borderColor: '#e6e6e6', paddingVertical: 15}}>
-              <Text style={formViewStyles.title}>
+              <Text style={[{color: (themeMode === 'dark') ? '#fff' : '#000'}, formViewStyles.title]}>
                 Change Font Size
               </Text>
               <View  style={{position: 'relative'}}>

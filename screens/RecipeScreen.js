@@ -13,7 +13,7 @@ import { generalStyles } from "../styles/global";
 import { getData, storeData } from "../utils/dataService";
 import Spinner from 'react-native-loading-spinner-overlay';
 import { sortObjectItem } from "../utils/helperFunction";
-import { Heart2, Edit, Delete } from 'react-native-iconly'
+import { Heart2, Edit, Delete, Show } from 'react-native-iconly'
 import Toast from 'react-native-toast-message';
 
 
@@ -137,51 +137,63 @@ export default function RecipeScreen({ navigation, route }) {
               tension={100} // These props are passed to the parent component (here TouchableScale)
               activeScale={0.95} //
               linearGradientProps={{
-                colors: ["#FFD15C", "gray"],
+                colors: ["#FFD15C", "#808080"],
                 start: { x: 1, y: 0 },
                 end: { x: 0.2, y: 0 },
               }}
               ViewComponent={LinearGradient} // Only if no expo
          
             >
+            <TouchableOpacity style={{flexDirection: 'row'}} onPress={() => navigation.navigate("RecipeDetail", { recipe: item})}>
               <Avatar
-                onPress={() => navigation.navigate("RecipeDetail")}
-                title="Fc"
-                containerStyle={{
-                  backgroundColor: "coral",
-                  borderColor: "#ffffff",
-                  borderStyle: "solid",
-                  borderWidth: 1,
-                  borderRadius: 10
-                }}
-                avatarStyle= {{
-                  borderRadius: 10
-                }}
-                size={54}
-                source={item.image && { uri: item.image }}
-              />
+                  onPress={() => navigation.navigate("RecipeDetail", { recipe: item})}
+                  title="Fc"
+                  containerStyle={{
+                    backgroundColor: "coral",
+                    borderColor: "#ffffff",
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    marginRight: 10
+                  }}
+                  avatarStyle= {{
+                    borderRadius: 10
+                  }}
+                  size={54}
+                  source={item.image && { uri: item.image }}
+                />
 
-              <TouchableOpacity style={{width: 170}} onPress={() => navigation.navigate("RecipeDetail")}>
-                <ListItem.Content style={{ height: 50}}>
-                  <ListItem.Title style={{ fontSize: 14, fontWeight: 'bold', color: 'white' }}>
-                    {item.title}
-                  </ListItem.Title>
-                  <ListItem.Subtitle style={{ fontSize: 10, color: 'white' }}>{item.description}</ListItem.Subtitle>
-                </ListItem.Content>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate("RecipeDetail", { recipe: item})}>
+                  <ListItem.Content>
+                    <ListItem.Title numberOfLines={2} style={{ fontSize: 14, fontWeight: 'bold', color: 'white' }}>
+                      {item.title}
+                    </ListItem.Title>
+                    <ListItem.Subtitle style={{ 
+                        fontSize: 10, 
+                        color: 'white'
+                      }} numberOfLines={1}>
+                        {item.description}
+                    </ListItem.Subtitle>
+                  </ListItem.Content>
+                </TouchableOpacity>
+             </TouchableOpacity>
 
               <View style={{display: 'flex', flexDirection: 'row', paddingVertical: 14}}>
-
-                <TouchableOpacity onPress={() => handleMarkAsFavourite(item.id)}>
-                  <Heart2 set={`${!item.favourite ? "light" : "bold"}`} primaryColor="white" size={20}/>
+                
+                <TouchableOpacity style={{marginRight: 4}} onPress={() => navigation.navigate("RecipeDetail", { recipe: item})}>
+                  <Show set="light" primaryColor="white" size={18}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{marginHorizontal: 6}} onPress={() => navigation.navigate("Edit", { recipe: item}) }>
-                  <Edit set="bold" primaryColor="white" size={20}/>
+                <TouchableOpacity onPress={() => handleMarkAsFavourite(item.id)}>
+                  <Heart2 set={!item.favourite ? "light" : "bold"} primaryColor="white" size={18}/>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{marginHorizontal: 4}} onPress={() => navigation.navigate("Edit", { recipe: item}) }>
+                  <Edit set="bold" primaryColor="white" size={18}/>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => handleDeleteRecipe(item.id)}>
-                  <Delete set="light" primaryColor="red" size={20}/>
+                  <Delete set="light" primaryColor="red" size={18}/>
                 </TouchableOpacity>
               </View>
             </ListItem>
@@ -197,17 +209,10 @@ const styles = StyleSheet.create({
     flex: 1
   },
   listContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginBottom: 10,
-    borderRadius: 15,
-    //IOS
-    shadowColor: "blue",
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 2.22,
-    // Android
-    elevation: 2.5,
-  },
+    borderRadius: 15
+  }
 });
